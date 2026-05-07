@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">شريحة</string>
+    <string name="nav_dashboard">لوحة التحكم</string>
+    <string name="nav_input">الإدخال</string>
+    <string name="nav_tariff">التعرفة</string>
+    <string name="nav_forecast">التوقعات</string>
+</resources>
