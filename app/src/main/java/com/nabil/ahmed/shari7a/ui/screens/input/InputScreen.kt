@@ -29,6 +29,7 @@ import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ConsumptionIndicator
 import com.nabil.ahmed.shari7a.ui.screens.input.components.DetailRow
+import com.nabil.ahmed.shari7a.ui.screens.input.components.ResultConsumptionCost
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 import java.util.Locale
@@ -75,82 +76,7 @@ fun InputScreen(viewModel: MainViewModel) {
         )
 
         // Input Card (Dark Green)
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF004D40))
-        ) {
-            Column(
-                modifier = Modifier.padding(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Text(
-                        text = "قراءة العداد الحالية",
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.Rounded.Edit,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.White)
-                        .padding(vertical = 8.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    BasicTextField(
-                        value = inputReading,
-                        onValueChange = { viewModel.onInputReadingChanged(it) },
-                        textStyle = LocalTextStyle.current.copy(
-                            fontSize = 48.sp,
-                            fontWeight = FontWeight.Black,
-                            textAlign = TextAlign.Center,
-                            color = Color.Black
-                        ),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.fillMaxWidth(),
-                        decorationBox = { innerTextField ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = "كيلوواط",
-                                    fontSize = 18.sp,
-                                    color = Color.Gray,
-                                    modifier = Modifier.padding(end = 8.dp)
-                                )
-                                innerTextField()
-                            }
-                        }
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "القراءة السابقة: ${String.format(Locale.US, "%,.0f", previousReading)} كيلوواط (الشهر الماضي)",
-                    color = Color.White.copy(alpha = 0.7f),
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-        }
+        InputCard(inputReading, viewModel, previousReading)
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -160,58 +86,99 @@ fun InputScreen(viewModel: MainViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // Result Card (Cyan/Neon)
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF00E5FF))
-        ) {
-            Column(modifier = Modifier.padding(20.dp)) {
-                DetailRow("الطاقة المستهلكة", "${billResult?.kwh?.toInt() ?: 0} kWh")
-                DetailRow("رسوم الخدمة", "${String.format(Locale.US, "%.2f", billResult?.serviceFee ?: 0.0)} EGP")
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                HorizontalDivider(color = Color.White.copy(alpha = 0.5f), thickness = 1.dp)
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "التكلفة التقديرية",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF004D40)
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    Text(
-                        text = "ج.م",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFFD81B60),
-                        modifier = Modifier.padding(bottom = 12.dp, end = 4.dp)
-                    )
-                    Text(
-                        text = String.format(Locale.US, "%.2f", billResult?.totalCost ?: 0.0),
-                        fontSize = 64.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color(0xFFD81B60)
-                    )
-                }
-                
-                Text(
-                    text = "هذه التكلفة تشمل رسوم الخدمة فقط ولا تشمل الرسوم الإدارية الأخرى",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color(0xFF004D40).copy(alpha = 0.7f),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
+        ResultConsumptionCost(billResult)
         
         Spacer(modifier = Modifier.height(32.dp))
+    }
+}
+
+@Composable
+private fun InputCard(
+    inputReading: String,
+    viewModel: MainViewModel,
+    previousReading: Double
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF004D40))
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = "قراءة العداد الحالية",
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    imageVector = Icons.Rounded.Edit,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.White)
+                    .padding(vertical = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                BasicTextField(
+                    value = inputReading,
+                    onValueChange = { viewModel.onInputReadingChanged(it) },
+                    textStyle = LocalTextStyle.current.copy(
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.Black,
+                        textAlign = TextAlign.Center,
+                        color = Color.Black
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                    decorationBox = { innerTextField ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "كيلوواط",
+                                fontSize = 18.sp,
+                                color = Color.Gray,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            innerTextField()
+                        }
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "القراءة السابقة: ${
+                    String.format(
+                        Locale.US,
+                        "%,.0f",
+                        previousReading
+                    )
+                } كيلوواط (الشهر الماضي)",
+                color = Color.White.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
     }
 }
 
