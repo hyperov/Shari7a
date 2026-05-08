@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.EditNote
-import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material3.Icon
@@ -28,10 +27,9 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import com.nabil.ahmed.shari7a.navigation.Destination
-import com.nabil.ahmed.shari7a.ui.screens.DashboardScreen
-import com.nabil.ahmed.shari7a.ui.screens.ForecastScreen
-import com.nabil.ahmed.shari7a.ui.screens.InputScreen
-import com.nabil.ahmed.shari7a.ui.screens.TariffScreen
+import com.nabil.ahmed.shari7a.ui.screens.forecast.ForecastScreen
+import com.nabil.ahmed.shari7a.ui.screens.input.InputScreen
+import com.nabil.ahmed.shari7a.ui.screens.tariff.TariffScreen
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
@@ -59,7 +57,7 @@ fun MainScreen() {
     val settingsManager = remember { SettingsManager(context) }
     val viewModel: MainViewModel = viewModel(factory = MainViewModelFactory(settingsManager))
     
-    val backStack = rememberNavBackStack(Destination.Dashboard)
+    val backStack = rememberNavBackStack(Destination.Forecast)
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,9 +80,8 @@ fun MainScreen() {
             entryProvider = { key ->
                 val navKey = key as NavKey
                 when (navKey) {
-                    Destination.Dashboard -> NavEntry(navKey) { DashboardScreen(viewModel) }
+                    Destination.Forecast -> NavEntry(navKey) { ForecastScreen(viewModel) }
                     Destination.Input -> NavEntry(navKey) { InputScreen(viewModel) }
-                    Destination.Forecast -> NavEntry(navKey) { ForecastScreen() }
                     Destination.Tariff -> NavEntry(navKey) { TariffScreen() }
                     else -> NavEntry(navKey) { Text("Unknown") }
                 }
@@ -100,22 +97,16 @@ fun AppBottomBar(
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = currentDestination == Destination.Dashboard,
-            onClick = { onNavigate(Destination.Dashboard) },
+            selected = currentDestination == Destination.Forecast,
+            onClick = { onNavigate(Destination.Forecast) },
             icon = { Icon(Icons.Rounded.Speed, contentDescription = null) },
-            label = { Text(stringResource(R.string.nav_dashboard)) }
+            label = { Text(stringResource(R.string.nav_forecast)) }
         )
         NavigationBarItem(
             selected = currentDestination == Destination.Input,
             onClick = { onNavigate(Destination.Input) },
             icon = { Icon(Icons.Rounded.EditNote, contentDescription = null) },
             label = { Text(stringResource(R.string.nav_input)) }
-        )
-        NavigationBarItem(
-            selected = currentDestination == Destination.Forecast,
-            onClick = { onNavigate(Destination.Forecast) },
-            icon = { Icon(Icons.Rounded.QueryStats, contentDescription = null) },
-            label = { Text(stringResource(R.string.nav_forecast)) }
         )
         NavigationBarItem(
             selected = currentDestination == Destination.Tariff,

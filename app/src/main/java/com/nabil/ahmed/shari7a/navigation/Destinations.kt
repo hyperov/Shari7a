@@ -5,13 +5,10 @@ import kotlinx.serialization.Serializable
 
 sealed interface Destination : NavKey {
     @Serializable
-    data object Dashboard : Destination
+    data object Forecast : Destination
     
     @Serializable
     data object Input : Destination
-    
-    @Serializable
-    data object Forecast : Destination
     
     @Serializable
     data object Tariff : Destination
