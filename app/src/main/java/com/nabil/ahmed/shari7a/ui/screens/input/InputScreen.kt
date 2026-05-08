@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
+import com.nabil.ahmed.shari7a.ui.screens.input.components.ConsumptionIndicator
 import com.nabil.ahmed.shari7a.ui.screens.input.components.DetailRow
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
@@ -154,89 +155,7 @@ fun InputScreen(viewModel: MainViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // Status Card (White)
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-        ) {
-            Column(modifier = Modifier.padding(20.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Surface(
-                        color = Color(0xFFFF80AB).copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text(
-                            text = "سكني",
-                            color = Color(0xFFD81B60),
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                    }
-                    Text(
-                        text = "الحالة النشطة",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color.Gray
-                    )
-                }
-
-                Text(
-                    text = "الشريحة ${billResult?.tier?.name ?: "-"}",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Black,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    val currentKwh = billResult?.kwh ?: 0.0
-                    val maxKwh = billResult?.tier?.maxKwh ?: 2000
-                    Text(
-                        text = "${currentKwh.toInt()} / $maxKwh kWh",
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "تقدم الاستهلاك",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                val progress = if (billResult != null) {
-                    (billResult!!.kwh / (billResult!!.tier.maxKwh ?: 2000)).toFloat().coerceIn(0f, 1f)
-                } else 0f
-                
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                        .clip(RoundedCornerShape(5.dp)),
-                    color = Color(0xFF00695C),
-                    trackColor = Color(0xFFE0F2F1)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = "الشريحة التالية: الشريحة ${if (billResult != null) billResult!!.tier.id + 1 else "-"} تبدأ قريباً.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
+        ConsumptionIndicator(billResult)
 
         Spacer(modifier = Modifier.height(24.dp))
 
