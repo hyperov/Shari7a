@@ -20,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.Locale
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.di.settingsDataStore
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
@@ -75,9 +76,9 @@ fun ForecastScreen(viewModel: MainViewModel) {
             ) {
                 Text(
                     text = "استهلاك الطاقة",
-                    color = Color(0xFF00BFA5),
+                    color = Color(0xFFD81B60),
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.headlineLarge
                 )
                 
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -96,15 +97,28 @@ fun ForecastScreen(viewModel: MainViewModel) {
 
                 Spacer(modifier = Modifier.height(8.dp))
                 
+                val simulatedResult = remember(simulationKwh) {
+                    com.nabil.ahmed.shari7a.logic.BillCalculator.calculate(simulationKwh)
+                }
+
                 Surface(
-                    color = Color(0xFFFF80AB).copy(alpha = 0.1f),
+                    color = Color(0xFF00BFA5).copy(alpha = 0.3f),
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Text(
-                        text = "تم كشف حمل مرتفع",
-                        color = Color(0xFFD81B60),
+                        text = buildAnnotatedString {
+                            withStyle(style = SpanStyle(color = Color(0xFF00BFA5))) {
+                                append("التكلفة المتوقعة: ")
+                            }
+                            withStyle(style = SpanStyle(color = Color(0xFFD81B60), fontWeight = FontWeight.Black)) {
+                                append(String.format(Locale.US, "%.2f", simulatedResult.totalCost))
+                            }
+                            withStyle(style = SpanStyle(color = Color(0xFF00BFA5))) {
+                                append(" ج.م")
+                            }
+                        },
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelMedium
+                        style = MaterialTheme.typography.labelLarge
                     )
                 }
 

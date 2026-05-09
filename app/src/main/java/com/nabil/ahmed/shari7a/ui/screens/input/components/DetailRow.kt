@@ -20,7 +20,8 @@ fun DetailRow(label: String, value: String) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = value, fontWeight = FontWeight.Bold, color = Color(0xFF004D40))
-        Text(text = label, color = Color(0xFF004D40).copy(alpha = 0.7f))
+//        Text(text = label, color = Color(0xFF004D40).copy(alpha = 0.7f))
+        Text(text = label, color = Color(0xFFFFFFFF))
     }
 }
 

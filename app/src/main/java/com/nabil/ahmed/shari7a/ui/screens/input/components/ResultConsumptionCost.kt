@@ -22,7 +22,7 @@ fun ResultConsumptionCost(billResult: BillResult?) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF00E5FF))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF00C29A))
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             DetailRow("الطاقة المستهلكة", "${billResult?.kwh?.toInt() ?: 0} kWh")
