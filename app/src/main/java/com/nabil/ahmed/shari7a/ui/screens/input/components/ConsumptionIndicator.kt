@@ -91,14 +91,14 @@ fun ConsumptionIndicator(billResult: BillResult?) {
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "الشريحة التالية: الشريحة ${if (billResult != null) billResult.tier.id + 1 else "-"} تبدأ قريباً.",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray,
-                textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth()
-            )
+            if (billResult != null && billResult.tier.id < 8)
+                Text(
+                    text = "الشريحة التالية: الشريحة ${billResult.tier.id + 1} تبدأ قريباً.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth()
+                )
         }
     }
 }
