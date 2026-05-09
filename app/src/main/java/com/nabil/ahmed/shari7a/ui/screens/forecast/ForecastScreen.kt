@@ -81,17 +81,17 @@ fun ForecastScreen(viewModel: MainViewModel) {
                     style = MaterialTheme.typography.headlineLarge
                 )
                 
-                Row(verticalAlignment = Alignment.Bottom) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "كيلوواط ساعة",
+                        fontSize = 18.sp,
+                        color = Color.DarkGray,
+                        modifier = Modifier.padding( end = 8.dp)
+                    )
                     Text(
                         text = simulationKwh.toInt().toString(),
                         fontSize = 72.sp,
                         fontWeight = FontWeight.Black
-                    )
-                    Text(
-                        text = "كيلوواط ساعة",
-                        fontSize = 18.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(bottom = 16.dp, start = 8.dp)
                     )
                 }
 
@@ -107,7 +107,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
                 ) {
                     Text(
                         text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = Color(0xFF00BFA5))) {
+                            withStyle(style = SpanStyle(color = Color(0xFF000000), fontWeight = FontWeight.Bold)) {
                                 append("التكلفة المتوقعة: ")
                             }
                             withStyle(style = SpanStyle(color = Color(0xFFD81B60), fontWeight = FontWeight.Black)) {
@@ -117,8 +117,8 @@ fun ForecastScreen(viewModel: MainViewModel) {
                                 append(" ج.م")
                             }
                         },
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelLarge
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
@@ -152,7 +152,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
             color = Color(0xFFD81B60)
         )
         Text(
-            text = "استهلاك الشبكة وتفاصيل التعرفة في الوقت الفعلي",
+            text = "استهلاك الشبكة وتفاصيل التعريفة في الوقت الفعلي",
             style = MaterialTheme.typography.bodySmall,
             color = Color(0xFF00BFA5),
             modifier = Modifier.padding(bottom = 24.dp)
