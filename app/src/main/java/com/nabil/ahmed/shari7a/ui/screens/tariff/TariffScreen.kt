@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -32,17 +33,20 @@ fun TariffScreen() {
             .fillMaxSize()
             .background(Color(0xFFBAFFE5))
             .padding(horizontal = 16.dp)
-            .padding(bottom = 16.dp)
+            .padding(bottom = 16.dp),
+        horizontalAlignment = Alignment.End
     ) {
         TopLogo()
-        
-        Text(
+
+        Text( modifier = Modifier
+            .fillMaxWidth(),
             text = "جدول الشرائح",
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Black,
-            modifier = Modifier.padding(bottom = 8.dp)
+            textAlign = TextAlign.Center
+
         )
-        
+
         Text(
             text = "بما في ذلك أسعار الشرائح ونطاقات الاستهلاك ورسوم الخدمة. يتبع نموذج التسعير مقياساً تصاعدياً يعتمد على إجمالي الاستهلاك بالكيلوواط ساعة.",
             style = MaterialTheme.typography.bodyMedium,
@@ -52,7 +56,7 @@ fun TariffScreen() {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.End
         ) {
             Surface(
                 color = Color(0xFFE1F5FE),
@@ -110,8 +114,6 @@ fun TariffScreen() {
 @Composable
 fun TariffScreenPreview() {
     Shari7aTheme {
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-            TariffScreen()
-        }
+        TariffScreen()
     }
 }

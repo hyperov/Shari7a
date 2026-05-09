@@ -80,10 +80,8 @@ fun MainScreen() {
                     Destination.Forecast -> NavEntry(navKey) { ForecastScreen(viewModel) }
                     Destination.Input -> NavEntry(navKey) { InputScreen(viewModel) }
                     Destination.Tariff -> NavEntry(navKey) {
-                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl)
-                        {
+
                             TariffScreen()
-                        }
                     }
                     else -> NavEntry(navKey) { Text("Unknown") }
                 }
