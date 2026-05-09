@@ -5,10 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.logic.BillCalculator
 import com.nabil.ahmed.shari7a.logic.BillResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val settingsManager: SettingsManager) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val settingsManager: SettingsManager) : ViewModel() {
 
     val previousReading: StateFlow<Double> = settingsManager.previousReading
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)

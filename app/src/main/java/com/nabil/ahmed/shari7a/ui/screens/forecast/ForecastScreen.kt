@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
+import com.nabil.ahmed.shari7a.di.settingsDataStore
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.EnergyZoneCard
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.IndicatorLabel
@@ -157,7 +158,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
 fun ForecastScreenPreview() {
     Shari7aTheme {
         val context = LocalContext.current
-        val settingsManager = SettingsManager(context)
+        val settingsManager = SettingsManager(context.settingsDataStore)
         val viewModel = MainViewModel(settingsManager)
         ForecastScreen(viewModel)
     }

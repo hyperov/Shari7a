@@ -26,9 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
+import com.nabil.ahmed.shari7a.di.settingsDataStore
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ConsumptionIndicator
 import com.nabil.ahmed.shari7a.ui.screens.input.components.DetailRow
+import com.nabil.ahmed.shari7a.ui.screens.input.components.InputCard
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ResultConsumptionCost
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
@@ -93,90 +95,12 @@ fun InputScreen(viewModel: MainViewModel) {
     }
 }
 
-@Composable
-private fun InputCard(
-    inputReading: String,
-    viewModel: MainViewModel,
-    previousReading: Double
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF004D40))
-    ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(
-                    text = "قراءة العداد الحالية",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(
-                    imageVector = Icons.Rounded.Edit,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(vertical = 8.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                BasicTextField(
-                    value = inputReading,
-                    onValueChange = { viewModel.onInputReadingChanged(it) },
-                    textStyle = LocalTextStyle.current.copy(
-                        fontSize = 48.sp,
-                        fontWeight = FontWeight.Black,
-                        textAlign = TextAlign.Center,
-                        color = Color.Black
-                    ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth(),
-                    decorationBox = { innerTextField ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "كيلوواط",
-                                fontSize = 18.sp,
-                                color = Color.Gray,
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                            innerTextField()
-                        }
-                    }
-                )
-            }
-
-
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun InputScreenPreview() {
     Shari7aTheme {
         val context = LocalContext.current
-        val settingsManager = SettingsManager(context)
+        val settingsManager = SettingsManager(context.settingsDataStore)
         val viewModel = MainViewModel(settingsManager)
         InputScreen(viewModel)
     }

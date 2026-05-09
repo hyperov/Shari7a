@@ -32,21 +32,19 @@ import com.nabil.ahmed.shari7a.ui.screens.forecast.ForecastScreen
 import com.nabil.ahmed.shari7a.ui.screens.input.InputScreen
 import com.nabil.ahmed.shari7a.ui.screens.tariff.TariffScreen
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nabil.ahmed.shari7a.data.local.SettingsManager
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
-import com.nabil.ahmed.shari7a.ui.viewmodel.factory.MainViewModelFactory
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Shari7aTheme {
-                CompositionLocalProvider() {
-                    MainScreen()
-                }
+                MainScreen()
             }
         }
     }
@@ -54,9 +52,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    val context = androidx.compose.ui.platform.LocalContext.current
-    val settingsManager = remember { SettingsManager(context) }
-    val viewModel: MainViewModel = viewModel(factory = MainViewModelFactory(settingsManager))
+    val viewModel: MainViewModel = hiltViewModel()
     
     val backStack = rememberNavBackStack(Destination.Forecast)
     
