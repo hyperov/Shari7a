@@ -2,6 +2,7 @@ package com.nabil.ahmed.shari7a.ui.screens.tariff
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,14 +30,14 @@ fun TariffScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FA))
+            .background(Color(0xFFBAFFE5))
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp)
     ) {
         TopLogo()
         
         Text(
-            text = "التعرفة",
+            text = "جدول الشرائح",
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Black,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -51,7 +52,7 @@ fun TariffScreen() {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+            horizontalArrangement = Arrangement.Start
         ) {
             Surface(
                 color = Color(0xFFE1F5FE),

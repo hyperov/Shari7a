@@ -43,9 +43,10 @@ fun InputScreen(viewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FA))
+            .background(Color(0xFFBAFFE5))
             .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.End
     ) {
         TopLogo()
 
@@ -165,19 +166,7 @@ private fun InputCard(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "القراءة السابقة: ${
-                    String.format(
-                        Locale.US,
-                        "%,.0f",
-                        previousReading
-                    )
-                } كيلوواط (الشهر الماضي)",
-                color = Color.White.copy(alpha = 0.7f),
-                style = MaterialTheme.typography.bodySmall
-            )
         }
     }
 }

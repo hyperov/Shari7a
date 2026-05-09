@@ -7,9 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,21 +24,25 @@ import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.EnergyZoneCard
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.IndicatorLabel
-import com.nabil.ahmed.shari7a.ui.screens.forecast.components.Segment
+import com.nabil.ahmed.shari7a.ui.screens.forecast.components.MultiSegmentProgressBar
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 
 @Composable
 fun ForecastScreen(viewModel: MainViewModel) {
     val billResult by viewModel.billResult.collectAsState()
-    val kwh = billResult?.kwh ?: 0.0
+    val actualKwh = billResult?.kwh ?: 0.0
+    
+    // Local simulation state initialized from actual kwh
+    var simulationKwh by remember(actualKwh) { mutableDoubleStateOf(actualKwh) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF8F9FA))
             .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.End
     ) {
         TopLogo()
 
@@ -57,13 +59,6 @@ fun ForecastScreen(viewModel: MainViewModel) {
             text = headerText,
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = "مراقبة الشبكة في الوقت الفعلي // العقدة_041",
-            style = MaterialTheme.typography.bodySmall,
-            color = Color.Gray,
-            modifier = Modifier.padding(bottom = 24.dp)
         )
 
         // Consumption Overview Card
@@ -86,7 +81,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
                 
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
-                        text = kwh.toInt().toString(),
+                        text = simulationKwh.toInt().toString(),
                         fontSize = 72.sp,
                         fontWeight = FontWeight.Black
                     )
@@ -115,40 +110,12 @@ fun ForecastScreen(viewModel: MainViewModel) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // Multi-segment progress bar
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFEEEEEE))
-                ) {
-                    Row(modifier = Modifier.fillMaxSize()) {
-                        Segment(0.1f, Color(0xFF00BFA5))
-                        Segment(0.2f, Color(0xFF4DB6AC))
-                        Segment(0.3f, Color(0xFFFBC02D))
-                        Segment(0.2f, Color(0xFFF4511E))
-                        Segment(0.2f, Color(0xFFD81B60))
+                MultiSegmentProgressBar(
+                    currentKwh = simulationKwh,
+                    onKwhChange = { newValue ->
+                        simulationKwh = newValue
                     }
-                    
-                    // Indicator thumb
-                    val indicatorPos = (kwh / 2000.0).toFloat().coerceIn(0f, 1f)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(indicatorPos)
-                            .fillMaxHeight()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
-                                .padding(3.dp)
-                        ) {
-                            Box(modifier = Modifier.fillMaxSize().clip(CircleShape).background(Color(0xFFD81B60)))
-                        }
-                    }
-                }
+                )
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 

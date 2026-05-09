@@ -22,7 +22,7 @@ fun ResultConsumptionCost(billResult: BillResult?) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF00E5FF))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFC6C4E0))
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             DetailRow("سعر الشريحة", "${billResult?.tier?.pricePerKwhPiaster ?: 0} kWh")

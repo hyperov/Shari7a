@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 
 @Composable
 fun TopLogo() {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth()
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -41,5 +43,13 @@ fun TopLogo() {
                 modifier = Modifier.size(28.dp)
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TopLogoPreview() {
+    Shari7aTheme {
+        TopLogo()
     }
 }

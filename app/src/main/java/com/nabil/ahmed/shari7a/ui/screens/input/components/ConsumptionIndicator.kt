@@ -31,7 +31,7 @@ fun ConsumptionIndicator(billResult: BillResult?) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
-                    color = Color(0xFFFF80AB).copy(alpha = 0.2f),
+                    color = Color(0xFF90003D).copy(alpha = 0.3f),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(
