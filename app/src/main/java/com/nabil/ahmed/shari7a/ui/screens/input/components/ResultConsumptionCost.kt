@@ -22,13 +22,17 @@ fun ResultConsumptionCost(billResult: BillResult?) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFC6C4E0))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF00E5FF))
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
-            DetailRow("سعر الشريحة", "${billResult?.tier?.pricePerKwhPiaster ?: 0} kWh")
+            DetailRow("الطاقة المستهلكة", "${billResult?.kwh?.toInt() ?: 0} kWh")
             DetailRow(
                 "رسوم الخدمة",
                 "${String.format(Locale.US, "%.2f", billResult?.serviceFee ?: 0.0)} EGP"
+            )
+            DetailRow(
+                "رسوم نظافة",
+                "${String.format(Locale.US, "%.2f", billResult?.cleaningFee ?: 20.0)} EGP"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -64,7 +68,7 @@ fun ResultConsumptionCost(billResult: BillResult?) {
             }
 
             Text(
-                text = "هذه التكلفة تشمل رسوم الخدمة فقط ولا تشمل الرسوم الإدارية الأخرى",
+                text = "هذه التكلفة تشمل رسوم الخدمة والنظافة ولا تشمل الرسوم الإدارية الأخرى",
                 style = MaterialTheme.typography.labelSmall,
                 color = Color(0xFF004D40).copy(alpha = 0.7f),
                 textAlign = TextAlign.Center,
@@ -83,7 +87,8 @@ fun ResultConsumptionCostPreview() {
                 kwh = 120.0,
                 consumptionCost = 114.0,
                 serviceFee = 6.0,
-                totalCost = 120.0,
+                cleaningFee = 20.0,
+                totalCost = 140.0,
                 tier = TariffTier(
                     id = 3,
                     name = "٣",

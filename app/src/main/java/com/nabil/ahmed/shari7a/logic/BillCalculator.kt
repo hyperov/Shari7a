@@ -7,6 +7,7 @@ data class BillResult(
     val kwh: Double,
     val consumptionCost: Double,
     val serviceFee: Double,
+    val cleaningFee: Double = 20.0,
     val totalCost: Double,
     val tier: TariffTier
 )
@@ -15,7 +16,7 @@ object BillCalculator {
     private val tiers = TariffData.tiers
 
     fun calculate(kwh: Double): BillResult {
-        if (kwh < 0) return BillResult(0.0, 0.0, 0.0, 0.0, tiers[0])
+        if (kwh < 0) return BillResult(0.0, 0.0, 0.0, 20.0, 20.0, tiers[0])
 
         val consumptionCost: Double
         val tier: TariffTier
@@ -59,11 +60,13 @@ object BillCalculator {
             }
         }
 
+        val cleaningFee = 20.0
         return BillResult(
             kwh = kwh,
             consumptionCost = consumptionCost,
             serviceFee = tier.serviceFeeEgp,
-            totalCost = consumptionCost + tier.serviceFeeEgp,
+            cleaningFee = cleaningFee,
+            totalCost = consumptionCost + tier.serviceFeeEgp + cleaningFee,
             tier = tier
         )
     }
