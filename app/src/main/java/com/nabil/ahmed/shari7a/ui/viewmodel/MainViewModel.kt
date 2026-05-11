@@ -3,6 +3,7 @@ package com.nabil.ahmed.shari7a.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
+import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.logic.BillCalculator
 import com.nabil.ahmed.shari7a.logic.BillResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,13 +20,16 @@ class MainViewModel @Inject constructor(private val settingsManager: SettingsMan
     val currentReading: StateFlow<Double> = settingsManager.currentReading
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
 
+    val meterType: StateFlow<MeterType> = settingsManager.meterType
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MeterType.LEGAL)
+
     private val _inputReading = MutableStateFlow("")
     val inputReading: StateFlow<String> = _inputReading.asStateFlow()
 
-    val billResult: StateFlow<BillResult?> = combine(inputReading, previousReading) { input, prev ->
+    val billResult: StateFlow<BillResult?> = combine(inputReading, previousReading, meterType) { input, prev, type ->
         val current = input.toDoubleOrNull() ?: 0.0
         if (current >= prev) {
-            BillCalculator.calculate(current - prev)
+            BillCalculator.calculate(current - prev, type)
         } else {
             null
         }
@@ -46,6 +50,12 @@ class MainViewModel @Inject constructor(private val settingsManager: SettingsMan
     fun setPreviousReading(value: Double) {
         viewModelScope.launch {
             settingsManager.savePreviousReading(value)
+        }
+    }
+
+    fun setMeterType(type: MeterType) {
+        viewModelScope.launch {
+            settingsManager.saveMeterType(type)
         }
     }
 }

@@ -2,6 +2,11 @@ package com.nabil.ahmed.shari7a.data.model
 
 import androidx.compose.ui.graphics.Color
 
+enum class MeterType {
+    LEGAL, // Regular tiered (قانوني)
+    CODE   // Flat rate (كودي)
+}
+
 data class TariffTier(
     val id: Int,
     val name: String,
@@ -14,6 +19,10 @@ data class TariffTier(
 )
 
 object TariffData {
+    const val CODE_METER_RATE_PIASTER = 274.0 // 2.74 EGP
+
+    val codeTier = TariffTier(0, "كودي", "سعر موحد", 0, null, CODE_METER_RATE_PIASTER, 0.0, Color(0xFF6200EE))
+
     val tiers = listOf(
         TariffTier(1, "١", "٠ - ٥٠", 0, 50, 68.0, 1.0, Color(0xFF00BFA5)),
         TariffTier(2, "٢", "٥١ - ١٠٠", 51, 100, 78.0, 2.0, Color(0xFF00897B)),

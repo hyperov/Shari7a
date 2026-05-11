@@ -80,8 +80,7 @@ fun MainScreen() {
                     Destination.Forecast -> NavEntry(navKey) { ForecastScreen(viewModel) }
                     Destination.Input -> NavEntry(navKey) { InputScreen(viewModel) }
                     Destination.Tariff -> NavEntry(navKey) {
-
-                            TariffScreen()
+                        TariffScreen(viewModel)
                     }
                     else -> NavEntry(navKey) { Text("Unknown") }
                 }

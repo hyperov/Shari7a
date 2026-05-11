@@ -1,5 +1,6 @@
 package com.nabil.ahmed.shari7a.logic
 
+import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.data.model.TariffData
 import com.nabil.ahmed.shari7a.data.model.TariffTier
 
@@ -15,8 +16,21 @@ data class BillResult(
 object BillCalculator {
     private val tiers = TariffData.tiers
 
-    fun calculate(kwh: Double): BillResult {
-        if (kwh < 0) return BillResult(0.0, 0.0, 0.0, 20.0, 20.0, tiers[0])
+    fun calculate(kwh: Double, meterType: MeterType = MeterType.LEGAL): BillResult {
+        if (kwh < 0) return BillResult(0.0, 0.0, 0.0, 20.0, 20.0, if (meterType == MeterType.CODE) TariffData.codeTier else tiers[0])
+
+        if (meterType == MeterType.CODE) {
+            val consumptionCost = kwh * (TariffData.CODE_METER_RATE_PIASTER / 100.0)
+            val cleaningFee = 20.0
+            return BillResult(
+                kwh = kwh,
+                consumptionCost = consumptionCost,
+                serviceFee = 0.0,
+                cleaningFee = cleaningFee,
+                totalCost = consumptionCost + cleaningFee,
+                tier = TariffData.codeTier
+            )
+        }
 
         val consumptionCost: Double
         val tier: TariffTier

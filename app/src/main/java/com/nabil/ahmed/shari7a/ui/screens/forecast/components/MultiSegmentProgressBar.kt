@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.data.model.TariffData
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 
@@ -28,7 +29,8 @@ fun MultiSegmentProgressBar(
     currentKwh: Double,
     onKwhChange: (Double) -> Unit,
     modifier: Modifier = Modifier,
-    maxKwh: Double = 2000.0
+    maxKwh: Double = 2000.0,
+    meterType: MeterType = MeterType.LEGAL
 ) {
     var width by remember { mutableIntStateOf(0) }
     
@@ -68,21 +70,29 @@ fun MultiSegmentProgressBar(
                 .background(Color(0xFFEEEEEE))
         ) {
             Row(modifier = Modifier.fillMaxSize()) {
-                TariffData.tiers.forEach { tier ->
-                    val weight = if (tier.maxKwh != null) {
-                        (tier.maxKwh.toFloat() - tier.minKwh.toFloat()) / maxKwh.toFloat()
-                    } else {
-                        (maxKwh.toFloat() - tier.minKwh.toFloat()).coerceAtLeast(0f) / maxKwh.toFloat()
+                if (meterType == MeterType.LEGAL) {
+                    TariffData.tiers.forEach { tier ->
+                        val weight = if (tier.maxKwh != null) {
+                            (tier.maxKwh.toFloat() - tier.minKwh.toFloat()) / maxKwh.toFloat()
+                        } else {
+                            (maxKwh.toFloat() - tier.minKwh.toFloat()).coerceAtLeast(0f) / maxKwh.toFloat()
+                        }
+
+                        if (weight > 0) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(weight)
+                                    .fillMaxHeight()
+                                    .background(tier.color.copy(alpha = 0.8f))
+                            )
+                        }
                     }
-                    
-                    if (weight > 0) {
-                        Box(
-                            modifier = Modifier
-                                .weight(weight)
-                                .fillMaxHeight()
-                                .background(tier.color.copy(alpha = 0.8f))
-                        )
-                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(TariffData.codeTier.color.copy(alpha = 0.8f))
+                    )
                 }
             }
         }
