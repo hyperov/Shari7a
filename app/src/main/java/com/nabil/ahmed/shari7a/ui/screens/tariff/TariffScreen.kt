@@ -61,6 +61,7 @@ fun TariffScreen(viewModel: MainViewModel) {
                 "العداد الكودي يعتمد على سعر موحد لجميع مستويات الاستهلاك، مما يسهل حساب التكلفة الشهرية بشكل ثابت.",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
+            textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 

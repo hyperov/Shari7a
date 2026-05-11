@@ -12,12 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.logic.BillResult
 import com.nabil.ahmed.shari7a.data.model.TariffTier
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 
 @Composable
-fun ConsumptionIndicator(billResult: BillResult?) {
+fun ConsumptionIndicator(billResult: BillResult?, meterType: MeterType) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -91,7 +92,7 @@ fun ConsumptionIndicator(billResult: BillResult?) {
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-            if (billResult != null && billResult.tier.id < 8)
+            if (billResult != null && billResult.tier.id < 8 && meterType == MeterType.LEGAL)
                 Text(
                     text = "الشريحة التالية: الشريحة ${billResult.tier.id + 1} تبدأ قريباً.",
                     style = MaterialTheme.typography.bodySmall,
@@ -123,7 +124,8 @@ fun ConsumptionIndicatorPreview() {
                     serviceFeeEgp = 6.0,
                     color = Color(0xFFFBC02D)
                 )
-            )
+            ),
+            meterType = MeterType.LEGAL
         )
     }
 }

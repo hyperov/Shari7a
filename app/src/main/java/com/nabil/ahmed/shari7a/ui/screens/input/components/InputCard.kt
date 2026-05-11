@@ -63,7 +63,7 @@ fun InputCard(
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.White)
                     .padding(vertical = 8.dp),
@@ -79,10 +79,10 @@ fun InputCard(
                         color = Color.Black
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.wrapContentWidth(),
                     decorationBox = { innerTextField ->
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.wrapContentWidth(),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {

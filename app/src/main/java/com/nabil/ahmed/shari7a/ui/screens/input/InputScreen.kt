@@ -126,7 +126,7 @@ fun InputScreen(viewModel: MainViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // Status Card (White)
-        ConsumptionIndicator(billResult)
+        ConsumptionIndicator(billResult,meterType)
 
         Spacer(modifier = Modifier.height(24.dp))
 
