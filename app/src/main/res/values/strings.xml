@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">شريحة</string>
+    <string name="app_name">شريحة عداد كهربا</string>
     <string name="nav_forecast">التوقعات</string>
     <string name="nav_input">الإدخال</string>
     <string name="nav_tariff">التعرفة</string>
