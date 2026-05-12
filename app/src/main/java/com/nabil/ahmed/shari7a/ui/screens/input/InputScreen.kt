@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.di.settingsDataStore
-import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ConsumptionIndicator
 import com.nabil.ahmed.shari7a.ui.screens.input.components.InputCard
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ResultConsumptionCost
@@ -56,8 +55,6 @@ fun InputScreen(viewModel: MainViewModel) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.End
     ) {
-        TopLogo()
-
         val headerText = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Black)) {
                 append("لوحة ")

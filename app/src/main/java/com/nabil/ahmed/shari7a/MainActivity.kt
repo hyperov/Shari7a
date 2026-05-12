@@ -6,35 +6,34 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.GridView
-import androidx.compose.material.icons.rounded.BarChart
+import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
 import com.nabil.ahmed.shari7a.navigation.Destination
+import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.forecast.ForecastScreen
 import com.nabil.ahmed.shari7a.ui.screens.input.InputScreen
 import com.nabil.ahmed.shari7a.ui.screens.tariff.TariffScreen
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
+import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,6 +57,14 @@ fun MainScreen() {
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 16.dp)) {
+                TopLogo()
+            }
+        },
         bottomBar = {
             val currentDestination = backStack.last() as Destination
             AppBottomBar(

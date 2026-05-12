@@ -25,7 +25,6 @@ import java.util.Locale
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.di.settingsDataStore
-import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.EnergyZoneCard
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.IndicatorLabel
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.MultiSegmentProgressBar
@@ -49,8 +48,6 @@ fun ForecastScreen(viewModel: MainViewModel) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.End
     ) {
-        TopLogo()
-
         val headerText = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Black)) {
                 append("نواة ")
