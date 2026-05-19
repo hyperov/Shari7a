@@ -35,15 +35,34 @@ import com.nabil.ahmed.shari7a.ui.screens.tariff.TariffScreen
 import com.nabil.ahmed.shari7a.ui.theme.Shari7aTheme
 import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.google.android.libraries.ads.mobile.sdk.MobileAds
+import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            MobileAds.initialize(this@MainActivity) {}
+//        }
         setContent {
             Shari7aTheme {
                 MainScreen()
+            }
+        }
+        val backgroundScope = CoroutineScope(Dispatchers.IO)
+        backgroundScope.launch {
+            // Initialize GMA Next-Gen SDK on a background thread.
+            MobileAds.initialize(
+                this@MainActivity,
+                // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+                InitializationConfig.Builder("ca-app-pub-8904130263057154~8780888627").build()
+            ) {
+                // Adapter initialization is complete.
             }
         }
     }

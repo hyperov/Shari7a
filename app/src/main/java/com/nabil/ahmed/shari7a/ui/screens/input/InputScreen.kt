@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.di.settingsDataStore
+import com.nabil.ahmed.shari7a.ui.components.BannerAdView
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ConsumptionIndicator
 import com.nabil.ahmed.shari7a.ui.screens.input.components.InputCard
 import com.nabil.ahmed.shari7a.ui.screens.input.components.ResultConsumptionCost
@@ -131,6 +132,10 @@ fun InputScreen(viewModel: MainViewModel) {
         ResultConsumptionCost(billResult)
         
         Spacer(modifier = Modifier.height(32.dp))
+
+        BannerAdView()
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

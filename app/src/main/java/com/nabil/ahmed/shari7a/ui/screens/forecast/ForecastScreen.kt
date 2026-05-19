@@ -25,6 +25,7 @@ import java.util.Locale
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.di.settingsDataStore
+import com.nabil.ahmed.shari7a.ui.components.BannerAdView
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.EnergyZoneCard
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.IndicatorLabel
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.MultiSegmentProgressBar
@@ -252,6 +253,10 @@ fun ForecastScreen(viewModel: MainViewModel) {
         }
         
         Spacer(modifier = Modifier.height(32.dp))
+
+        BannerAdView()
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
