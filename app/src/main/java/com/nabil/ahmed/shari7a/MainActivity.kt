@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.nabil.ahmed.shari7a.navigation.Destination
+import com.nabil.ahmed.shari7a.ui.components.BannerAdView
 import com.nabil.ahmed.shari7a.ui.components.TopLogo
 import com.nabil.ahmed.shari7a.ui.screens.forecast.ForecastScreen
 import com.nabil.ahmed.shari7a.ui.screens.input.InputScreen
@@ -85,16 +87,19 @@ fun MainScreen() {
             }
         },
         bottomBar = {
-            val currentDestination = backStack.last() as Destination
-            AppBottomBar(
-                currentDestination = currentDestination,
-                onNavigate = { destination ->
-                    if (backStack.last() != destination) {
-                        backStack.clear()
-                        backStack.add(destination)
+            Column {
+                BannerAdView()
+                val currentDestination = backStack.last() as Destination
+                AppBottomBar(
+                    currentDestination = currentDestination,
+                    onNavigate = { destination ->
+                        if (backStack.last() != destination) {
+                            backStack.clear()
+                            backStack.add(destination)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     ) { innerPadding ->
         NavDisplay(

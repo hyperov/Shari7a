@@ -24,7 +24,6 @@ import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
 import com.nabil.ahmed.shari7a.data.model.TariffData
 import com.nabil.ahmed.shari7a.di.settingsDataStore
-import com.nabil.ahmed.shari7a.ui.components.BannerAdView
 import com.nabil.ahmed.shari7a.ui.screens.tariff.components.ClosedTierRow
 import com.nabil.ahmed.shari7a.ui.screens.tariff.components.TariffRow
 import com.nabil.ahmed.shari7a.ui.screens.tariff.components.TariffTableHeader
@@ -188,8 +187,6 @@ fun TariffScreen(viewModel: MainViewModel) {
         }
 
 //        Spacer(modifier = Modifier.height(32.dp))
-
-        BannerAdView()
 
         Spacer(modifier = Modifier.height(16.dp))
     }
