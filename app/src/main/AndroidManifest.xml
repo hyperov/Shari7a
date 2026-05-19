@@ -28,7 +28,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8904130263057154~8780888627" />
+            android:value="${admobAppId}" />
     </application>
 
 </manifest>

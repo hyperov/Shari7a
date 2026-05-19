@@ -35,6 +35,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //test ad ids
+        buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+        buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+        manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
     }
 
     buildTypes {
@@ -45,6 +49,14 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            
+            // Read from local.properties, fallback to test IDs if not found
+            val prodBannerId = localProperties.getProperty("PROD_BANNER_AD_UNIT_ID") ?: "ca-app-pub-3940256099942544/6300978111"
+            val prodAppId = localProperties.getProperty("PROD_ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+            
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"$prodBannerId\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"$prodAppId\"")
+            manifestPlaceholders["admobAppId"] = prodAppId
         }
     }
     compileOptions {
@@ -53,6 +65,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

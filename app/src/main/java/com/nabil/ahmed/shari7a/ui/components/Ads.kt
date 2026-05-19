@@ -13,6 +13,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
+import com.nabil.ahmed.shari7a.BuildConfig
 
 /**
  * A Jetpack Compose wrapper for the AdMob Next-Gen Banner Ad.
@@ -20,7 +21,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 @Composable
 fun BannerAdView(
     modifier: Modifier = Modifier,
-    adUnitId: String = "ca-app-pub-3940256099942544/6300978111" // Test ad unit ID
+    adUnitId: String = BuildConfig.BANNER_AD_UNIT_ID
 ) {
     AndroidView(
         modifier = modifier.fillMaxWidth(),
