@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import java.util.Locale
 import com.nabil.ahmed.shari7a.data.local.SettingsManager
 import com.nabil.ahmed.shari7a.data.model.MeterType
+import com.nabil.ahmed.shari7a.logic.BillResult
 import com.nabil.ahmed.shari7a.di.settingsDataStore
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.EnergyZoneCard
 import com.nabil.ahmed.shari7a.ui.screens.forecast.components.IndicatorLabel
@@ -35,6 +36,20 @@ import com.nabil.ahmed.shari7a.ui.viewmodel.MainViewModel
 fun ForecastScreen(viewModel: MainViewModel) {
     val billResult by viewModel.billResult.collectAsState()
     val meterType by viewModel.meterType.collectAsState()
+    
+    ForecastContent(
+        billResult = billResult,
+        meterType = meterType,
+        onMeterTypeChange = { viewModel.setMeterType(it) }
+    )
+}
+
+@Composable
+fun ForecastContent(
+    billResult: BillResult?,
+    meterType: MeterType,
+    onMeterTypeChange: (MeterType) -> Unit
+) {
     val actualKwh = billResult?.kwh ?: 0.0
     
     // Local simulation state initialized from actual kwh
@@ -43,7 +58,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FA))
+            .background(Color(0xFFBAFFE5))
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.End
@@ -87,12 +102,12 @@ fun ForecastScreen(viewModel: MainViewModel) {
             ) {
                 Tab(
                     selected = meterType == MeterType.LEGAL,
-                    onClick = { viewModel.setMeterType(MeterType.LEGAL) },
+                    onClick = { onMeterTypeChange(MeterType.LEGAL) },
                     text = { Text("قانوني", fontWeight = FontWeight.Bold) }
                 )
                 Tab(
                     selected = meterType == MeterType.CODE,
-                    onClick = { viewModel.setMeterType(MeterType.CODE) },
+                    onClick = { onMeterTypeChange(MeterType.CODE) },
                     text = { Text("كودي", fontWeight = FontWeight.Bold) }
                 )
             }
@@ -196,7 +211,7 @@ fun ForecastScreen(viewModel: MainViewModel) {
             Text(
                 text = "استهلاك الشبكة وتفاصيل التعريفة في الوقت الفعلي",
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF00BFA5),
+
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -261,9 +276,10 @@ fun ForecastScreen(viewModel: MainViewModel) {
 @Composable
 fun ForecastScreenPreview() {
     Shari7aTheme {
-        val context = LocalContext.current
-        val settingsManager = SettingsManager(context.settingsDataStore)
-        val viewModel = MainViewModel(settingsManager)
-        ForecastScreen(viewModel)
+        ForecastContent(
+            billResult = null,
+            meterType = MeterType.LEGAL,
+            onMeterTypeChange = {}
+        )
     }
 }
